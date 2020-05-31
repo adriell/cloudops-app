@@ -7,9 +7,7 @@ node {
   stage('Test') {
     sh 'mvn -f pom.xml test'
   }
- // stage('Sonar') {
- //   sh 'mvn -f pom.xml test'
- // }
+ 
   stage('Create Docker Image') {
     docker.build("adriell/cloudops-app:${env.BUILD_NUMBER}")
     docker.build("adriell/cloudops-app:latest")
