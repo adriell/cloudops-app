@@ -2,6 +2,11 @@ node {
 
   checkout scm
 
+ environment {
+      registry = ""
+      registryCredential = "docker_hub"
+  }
+
   env.PATH = "${tool 'Maven3'}/bin:${env.PATH}"
 
   stage('Build') {
@@ -12,7 +17,7 @@ node {
   }
  
   stage('Deploy Docker Image') {
-      docker.withRegistry("","docker_hub"){
+      docker.withRegistry(registry, registryCredential){
           def cloudOps = docker.build("cloudops-app:${env.BUILD_NUMBER}")
           cloudOps.push()
           
