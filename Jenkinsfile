@@ -3,7 +3,7 @@ node {
   checkout scm
 
  environment {
-      REGISTRY_URL = "docker.io"
+      REGISTRY_URL = ""
       REGISTRY_CREDENTIALS_ID = "docker_hub"
   }
 
@@ -17,7 +17,7 @@ node {
   }
  
   stage('Deploy Docker Image') {
-      docker.withRegistry(REGISTRY_URL, REGISTRY_CREDENTIALS_ID ){
+      docker.withRegistry("${REGISTRY_URL}", "${REGISTRY_CREDENTIALS_ID}" ){
           def cloudOps = docker.build("cloudops-app:${env.BUILD_NUMBER}")
           cloudOps.push()
           
