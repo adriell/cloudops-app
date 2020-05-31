@@ -4,7 +4,7 @@ node {
 
   def cloudops
   env.PATH = "${tool 'Maven3'}/bin:${env.PATH}"
-
+  
   stage('Build') {
     sh 'mvn clean package -DskipTests'
   }
@@ -23,7 +23,7 @@ node {
             cloudops.push("${env.BUILD_NUMBER}")
             cloudops.push("latest")
         }
-      }catch (error) {       
+      } catch (error) {       
       } finally {
           sh "docker rm -f adriell/cloudops-app:${env.BUILD_NUMBER}"
           sh "docker rm -f adriell/cloudops-app:latest"
