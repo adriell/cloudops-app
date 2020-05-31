@@ -18,7 +18,7 @@ node {
  
   stage('Deploy Docker Image') {
       docker.withRegistry('', 'dockerHubCredential' ){
-        def  cloudops = docker.build("cloudops-app")
+        def  cloudops = docker.build("adriell/cloudops-app")
           cloudops.push("${env.BUILD_NUMBER}")
           cloudops.push("latest")
       }
