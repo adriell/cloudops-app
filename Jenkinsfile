@@ -17,7 +17,7 @@ node {
   }
  
   stage('Deploy Docker Image') {
-      docker.withRegistry('https://docker.io', 'docker_hub' ){
+      docker.withRegistry('https://hub.docker.com', 'docker_hub' ){
           def cloudOps = docker.build("cloudops-app:${env.BUILD_NUMBER}")
           cloudOps.push()
           
