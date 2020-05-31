@@ -2,11 +2,6 @@ node {
 
   checkout scm
 
-  environment {
-      registry = "adriell/cloudops-app"
-      registryCredential = "docker_hub"
-  }
-
   env.PATH = "${tool 'Maven3'}/bin:${env.PATH}"
 
   stage('Build') {
@@ -17,7 +12,7 @@ node {
   }
  
   stage('Deploy Docker Image') {
-      docker.withRegistry('https://registry-1.docker.io/v2/','docker_hub'){
+      docker.withRegistry("","docker_hub"){
           def cloudOps = docker.build("cloudops-app:${env.BUILD_NUMBER}")
           cloudOps.push()
           
