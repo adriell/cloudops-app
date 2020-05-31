@@ -17,13 +17,12 @@ node {
   }
  
   stage('Deploy Docker Image') {
-      docker.withRegistry('https://hub.docker.com','docker_hub'){
+      docker.withRegistry('https://registry-1.docker.io/v2/','docker_hub'){
           def cloudOps = docker.build("cloudops-app:${env.BUILD_NUMBER}")
           cloudOps.push()
           
           def cloudOpsLatest = docker.build("cloudops-app:latest")
           cloudOpsLatest.push()
-
       }
   }
 
@@ -36,9 +35,4 @@ node {
    // sh "docker run -name cloudops-app adriell/cloudops-app:${env.BUILD_NUMBER}"
    sh "echo Deploy"
   }
-
-//stage ('LoadTeste') {
-//  sh 'loadteste'
-//}
-
 }
