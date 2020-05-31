@@ -17,11 +17,13 @@ node {
   }
  
   stage('Deploy Docker Image') {
-      steps{
-          script{
-               docker.build registry + ":${env.BUILD_NUMBER}"
-               docker.build registry + ":latest"
-          }
+      docker.withRegistry('https://hub.docker.com','docker_hub'){
+          def cloudOps = docker.build("cloudops-app:${env.BUILD_NUMBER}")
+          cloudOps.push()
+          
+          def cloudOpsLatest = docker.build("cloudops-app:latest")
+          cloudOpsLatest.push()
+
       }
   }
 
