@@ -17,7 +17,7 @@ node {
   }
  
   stage('Deploy Docker Image') {
-      docker.withRegistry(registry, registryCredential){
+      docker.withRegistry("", cedentialsId:"registryCredential"){
           def cloudOps = docker.build("cloudops-app:${env.BUILD_NUMBER}")
           cloudOps.push()
           
