@@ -1,6 +1,14 @@
 node {
+
   checkout scm
+
+  environment {
+      registry = "adriell/cloudops-app"
+      registryCredential = "docker_hub"
+  }
+
   env.PATH = "${tool 'Maven3'}/bin:${env.PATH}"
+
   stage('Build') {
     sh 'mvn clean package -DskipTests'
   }
@@ -8,9 +16,9 @@ node {
     sh 'mvn -f pom.xml test'
   }
  
-  stage('Create Docker Image') {
-    docker.build("adriell/cloudops-app:${env.BUILD_NUMBER}")
-    docker.build("adriell/cloudops-app:latest")
+  stage('Deploy Docker Image') {
+    docker.build registry + ":${env.BUILD_NUMBER}"
+    docker.build registry + ":latest"
   }
 
   stage('Scan') {
@@ -19,7 +27,8 @@ node {
 
 
   stage ('Deploy Application') {
-    sh "docker run -name cloudops-app adriell/cloudops-app:${env.BUILD_NUMBER}"
+   // sh "docker run -name cloudops-app adriell/cloudops-app:${env.BUILD_NUMBER}"
+   sh "echo Deploy"
   }
 
 //stage ('LoadTeste') {
