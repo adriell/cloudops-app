@@ -19,7 +19,7 @@ node {
   stage('Deploy Docker Image') {
       docker.withRegistry('https://registry.hub.docker.com', 'dockerHub' ){
         def  cloudops = docker.build("cloudops-app")
-          cloudOps.push("${env.BUILD_NUMBER}")
+          cloudops.push("${env.BUILD_NUMBER}")
           cloudops.push("latest")
       }
   }
