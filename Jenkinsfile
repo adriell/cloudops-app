@@ -4,7 +4,7 @@ node {
 
  environment {
       REGISTRY_URL = "https://hub.docker.com"
-      REGISTRY_CREDENTIALS_ID = "docker_hub"
+      REGISTRY_CREDENTIALS_ID = "adriell"
   }
 
   env.PATH = "${tool 'Maven3'}/bin:${env.PATH}"
