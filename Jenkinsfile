@@ -17,8 +17,12 @@ node {
   }
  
   stage('Deploy Docker Image') {
-    docker.build registry + ":${env.BUILD_NUMBER}"
-    docker.build registry + ":latest"
+      steps{
+          script{
+               docker.build registry + ":${env.BUILD_NUMBER}"
+               docker.build registry + ":latest"
+          }
+      }
   }
 
   stage('Scan') {
