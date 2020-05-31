@@ -4,7 +4,7 @@ node {
 
  environment {
       REGISTRY_URL = "https://hub.docker.com"
-      REGISTRY_CREDENTIALS_ID = "adriell"
+      REGISTRY_CREDENTIALS_ID = "docker_hub"
   }
 
   env.PATH = "${tool 'Maven3'}/bin:${env.PATH}"
@@ -17,7 +17,7 @@ node {
   }
  
   stage('Deploy Docker Image') {
-      docker.withRegistry("${env.REGISTRY_URL}", "${env.REGISTRY_CREDENTIALS_ID}" ){
+      docker.withRegistry('', 'docker_hub' ){
           def cloudOps = docker.build("cloudops-app:${env.BUILD_NUMBER}")
           cloudOps.push()
           
