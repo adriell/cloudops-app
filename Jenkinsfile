@@ -1,9 +1,6 @@
 node {
   checkout scm
   env.PATH = "${tool 'Maven3'}/bin:${env.PATH}"
-  stage('Update Ansible') {
-    sh 'mvn clean package -DskipTests'
-  }
   stage('Build') {
     sh 'mvn clean package -DskipTests'
   }
@@ -19,10 +16,8 @@ node {
   }
 
   stage('Scan') {
-        steps{
-            aquaMicroscanner imageName: "adriell/cloudops-app:${env.BUILD_NUMBER}", notCompliesCmd: 'exit 4', onDisallowed: 'fail', outputFormat: 'html'
-         }
-    }
+    aquaMicroscanner imageName: "adriell/cloudops-app:${env.BUILD_NUMBER}", notCompliesCmd: 'exit 4', onDisallowed: 'fail', outputFormat: 'html'
+  }
 
 
   stage ('Deploy Application') {
