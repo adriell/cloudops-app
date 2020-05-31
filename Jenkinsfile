@@ -25,8 +25,8 @@ node {
         }
       } catch (error) {       
       } finally {
-          sh "docker rm -f adriell/cloudops-app:${env.BUILD_NUMBER}"
-          sh "docker rm -f adriell/cloudops-app:latest"
+          sh "docker rmi -f adriell/cloudops-app:${env.BUILD_NUMBER}"
+          sh "docker rmi -f adriell/cloudops-app:latest"
       }
   }
   stage('Scan') {
