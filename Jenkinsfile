@@ -8,10 +8,8 @@ node {
     sh 'mvn -f pom.xml test'
   }
   stage('Create Docker Image') {
-    dir('webapp') {
-      docker.build("adriell/cloudops-app:${env.BUILD_NUMBER}")
-      docker.build("adriell/cloudops-app:latest")
-    }
+    docker.build("adriell/cloudops-app:${env.BUILD_NUMBER}")
+    docker.build("adriell/cloudops-app:latest")
   }
 
   stage ('Run Application') {
