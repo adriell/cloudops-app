@@ -18,6 +18,7 @@ node {
  
   stage('Deploy Docker Image') {
       docker.withRegistry('', 'docker_hub' ){
+          sh "docker login -u ${USERNAME} -p ${PASSWORD}"
           def cloudOps = docker.build("cloudops-app:${env.BUILD_NUMBER}")
           cloudOps.push()
           
