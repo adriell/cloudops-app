@@ -38,7 +38,7 @@ node {
 
 
   stage ('Deploy Application') {
-   sh "cd /opt/cloudops/ansible && ansible-playbook -i inventory local.yml --extra-vars 'container_name=cloudops docker_image=adriell/cloudops-app:${env.BUILD_NUMBER}'"
+   sh "cd /opt/cloudops/ansible && /usr/local/bin/ansible-playbook -i inventory local.yml --extra-vars 'container_name=cloudops docker_image=adriell/cloudops-app:${env.BUILD_NUMBER}'"
   }
   
   stage ('Notify') {
