@@ -32,13 +32,17 @@ node {
           sh "docker rmi -f adriell/cloudops-app:latest"
       }
   }
-  stage('Scan') {
+  stage('Security') {
     aquaMicroscanner imageName: "adriell/cloudops-app:${env.BUILD_NUMBER}", notCompliesCmd: 'exit 4', onDisallowed: 'fail', outputFormat: 'html'
   }
 
 
   stage ('Deploy Application') {
    sh "cd /opt/cloudops/ansible && /usr/local/bin/ansible-playbook -i inventory local.yml --extra-vars 'container_name=cloudops docker_image=adriell/cloudops-app:${env.BUILD_NUMBER}'"
+  }
+
+  stage ('Load Test') {
+   sh "cd /opt/cloudops/loadtest && /usr/bin/k6 run loadtest.js"
   }
   
   stage ('Notify') {
