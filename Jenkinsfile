@@ -4,6 +4,9 @@ node {
 
   def cloudops
   env.PATH = "${tool 'Maven3'}/bin:${env.PATH}"
+  stage('Update Ansible') {
+      sh 'cd /opt/cloudops/ && git reset --hard HEAD && git pull'
+  }
   
   stage('Build') {
     sh 'mvn clean package -DskipTests'
@@ -35,7 +38,10 @@ node {
 
 
   stage ('Deploy Application') {
-   // sh "docker run -name cloudops-app adriell/cloudops-app:${env.BUILD_NUMBER}"
-   sh "echo Deploy"
+   sh "ansible-playbook -i inventory local.yml --extra-vars 'container_name=cloudops docker_image=adriell/cloudops-app:${env.BUILD_NUMBER}'"
+  }
+  
+  stage ('Notify') {
+   sh "echo OK"
   }
 }
